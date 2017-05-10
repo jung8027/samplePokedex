@@ -29,23 +29,7 @@ var Pokedex = React.createClass({
 	       timeout:10000
     });
   },
-  handlePokemonClick: function(pokemon) {
-    console.log('url: ' + pokemon.url);
-    $.ajax({
-        url: pokemon.url ,
-        dataType: 'json',
-        cache: true,
-        success: function(data){
-         // console.log("loaded pokemon details");
-          console.log(data);
-          this.setState({selectedPokemon: data})
-        }.bind(this),
-        error: function(xhr, status, err) {
-           console.log("error")
-           console.error(this.props.url, status, err.toString());
-        }.bind(this)
-    });
-  },
+
 
   handlePokemonSearch: function(name){
      if (name === ""){
@@ -65,18 +49,20 @@ var Pokedex = React.createClass({
            <PokemonSearch search={this.handlePokemonSearch} />
            <PokemonList click={this.handlePokemonClick} data={this.state.filteredList} />
           </div>
-
           <div className="col-md-offset-1 col-md-6">
-          <PokemonInfo pokemon={this.state.selectedPokemon} />
+          {this.props.children}
           </div>
       </div>
     );
   }
 });
 
-
-
 ReactDOM.render(
-  <Pokedex />,
+  <Router history={hashHistory}>
+    <Route path="/" component={Pokedex}>
+      <Route path="/:name" component={PokemonInfo}>
+      </Route>
+    </Route>
+  </Router>,
   document.getElementById('root')
 );
