@@ -1,7 +1,7 @@
 module.exports = {
-  entry: "./scripts/pokedex.jsx",
+  entry: "./public/scripts/pokedex.jsx",
   output: {
-    path: "./scripts",
+    path: "./public/scripts",
     filename: "bundle.js",
   },
   //what is bundle.js doing?
